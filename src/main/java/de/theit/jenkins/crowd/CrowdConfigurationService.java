@@ -548,7 +548,12 @@ public class CrowdConfigurationService {
         if (LOG.isLoggable(Level.FINEST)) {
             LOG.finest("CrowdClient.isUserDirectGroupMember()");
         }
-        return crowdClient.isUserDirectGroupMember(username, groupname);
+        try {
+            return crowdClient.isUserDirectGroupMember(username, groupname);
+        }
+        catch (com.atlassian.crowd.exception.InvalidCrowdServiceException e) {
+            return false;
+        }
     }
 
     public boolean isUserNestedGroupMember(String username, String groupname) throws OperationFailedException, ApplicationPermissionException, InvalidAuthenticationException {
